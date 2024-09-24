@@ -5,7 +5,7 @@ BasedOnStyle: LLVM
 ---
 Language: Cpp
 # Force pointers to the type for C++.
-ColumnLimit: 128
+ColumnLimit: 100
 IndentWidth: 4
 NamespaceIndentation: All
 AccessModifierOffset: -4

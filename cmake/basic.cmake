@@ -3,6 +3,7 @@ project(AAA)
 # Src files
 file(GLOB_RECURSE AAA_SRCS
     ${AAA_ROOT_DIR}/src/*.c
+    ${AAA_ROOT_DIR}/src/*.cc
     ${AAA_ROOT_DIR}/src/*.cpp
 )
 # Include
@@ -26,3 +27,4 @@ endif()
 # CTest
 enable_testing()
 add_test(basic example/basic)
+add_test(fmt_native example/fmt_native)
