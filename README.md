@@ -1,5 +1,5 @@
 # Mooncake Log
-[spdlog](https://github.com/gabime/spdlog) 青春版，只是 [fmt](https://github.com/fmtlib/fmt) 库的简单封装
+[spdlog](https://github.com/gabime/spdlog) 幼儿版，只是 [fmt](https://github.com/fmtlib/fmt) 库的简单封装
 
 ```cpp
 mclog::info("啊？？ {} ..??? 0x{:02X}", 114514, 66);
