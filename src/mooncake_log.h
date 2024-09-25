@@ -15,100 +15,100 @@
 #include "fmt/chrono.h"
 #include <utility>
 
-namespace Mooncake
+namespace Mooncake {
+namespace mclog {
+namespace internal {
+void printf_tag_time();
+void print_tag_info();
+void print_tag_warn();
+void print_tag_error();
+} // namespace internal
+
+/**
+ * @brief Log info
+ *
+ * @tparam Args
+ * @param args
+ */
+template <typename... Args> void info(Args &&... args)
 {
-    namespace mclog
-    {
-        void _printf_tag_time();
-        void _print_tag_info();
-        void _print_tag_warn();
-        void _print_tag_error();
+    internal::printf_tag_time();
+    internal::print_tag_info();
+    fmt::println(std::forward<Args>(args)...);
+}
 
-        /**
-         * @brief Log info
-         *
-         * @tparam Args
-         * @param args
-         */
-        template <typename... Args>
-        void info(Args&&... args)
-        {
-            _print_tag_info();
-            fmt::println(std::forward<Args>(args)...);
-        }
+/**
+ * @brief Log warning
+ *
+ * @tparam Args
+ * @param args
+ */
+template <typename... Args> void warn(Args &&... args)
+{
+    internal::printf_tag_time();
+    internal::print_tag_warn();
+    fmt::println(std::forward<Args>(args)...);
+}
 
-        /**
-         * @brief Log warning
-         *
-         * @tparam Args
-         * @param args
-         */
-        template <typename... Args>
-        void warn(Args&&... args)
-        {
-            _print_tag_warn();
-            fmt::println(std::forward<Args>(args)...);
-        }
+/**
+ * @brief Log error
+ *
+ * @tparam Args
+ * @param args
+ */
+template <typename... Args> void error(Args &&... args)
+{
+    internal::printf_tag_time();
+    internal::print_tag_error();
+    fmt::println(std::forward<Args>(args)...);
+}
 
-        /**
-         * @brief Log error
-         *
-         * @tparam Args
-         * @param args
-         */
-        template <typename... Args>
-        void error(Args&&... args)
-        {
-            _print_tag_error();
-            fmt::println(std::forward<Args>(args)...);
-        }
+/**
+ * @brief Log info with a custom tag
+ *
+ * @tparam Args
+ * @param customTag
+ * @param args
+ */
+template <typename... Args> void tagInfo(const std::string &customTag, Args &&... args)
+{
+    internal::printf_tag_time();
+    fmt::print("[{}] ", customTag);
+    internal::print_tag_info();
+    fmt::println(std::forward<Args>(args)...);
+}
 
-        /**
-         * @brief Log info with a custom tag
-         *
-         * @tparam Args
-         * @param customTag
-         * @param args
-         */
-        template <typename... Args>
-        void tagInfo(const std::string& customTag, Args&&... args)
-        {
-            _print_tag_info();
-            fmt::print("[{}] ", customTag);
-            fmt::println(std::forward<Args>(args)...);
-        }
+/**
+ * @brief Log warning with a custom tag
+ *
+ * @tparam Args
+ * @param customTag
+ * @param args
+ */
+template <typename... Args> void tagWarn(const std::string &customTag, Args &&... args)
+{
+    internal::printf_tag_time();
+    fmt::print("[{}] ", customTag);
+    internal::print_tag_warn();
+    fmt::println(std::forward<Args>(args)...);
+}
 
-        /**
-         * @brief Log warning with a custom tag
-         *
-         * @tparam Args
-         * @param customTag
-         * @param args
-         */
-        template <typename... Args>
-        void tagWarn(const std::string& customTag, Args&&... args)
-        {
-            _print_tag_warn();
-            fmt::print("[{}] ", customTag);
-            fmt::println(std::forward<Args>(args)...);
-        }
+/**
+ * @brief Log error with a custom tag
+ *
+ * @tparam Args
+ * @param customTag
+ * @param args
+ */
+template <typename... Args> void tagError(const std::string &customTag, Args &&... args)
+{
+    internal::printf_tag_time();
+    fmt::print("[{}] ", customTag);
+    internal::print_tag_error();
+    fmt::println(std::forward<Args>(args)...);
+}
 
-        /**
-         * @brief Log error with a custom tag
-         *
-         * @tparam Args
-         * @param customTag
-         * @param args
-         */
-        template <typename... Args>
-        void tagError(const std::string& customTag, Args&&... args)
-        {
-            _print_tag_error();
-            fmt::print("[{}] ", customTag);
-            fmt::println(std::forward<Args>(args)...);
-        }
-
-        /* --------------------------------- Setting -------------------------------- */
-        void setTimeTagEnable(bool enable);
-    }; // namespace mclog
+/* --------------------------------- Setting -------------------------------- */
+void setTimeTagEnable(bool enable);
+}; // namespace mclog
 } // namespace Mooncake
