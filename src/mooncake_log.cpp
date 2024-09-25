@@ -10,12 +10,13 @@
  */
 #include "mooncake_log.h"
 #include <chrono>
+#include <ctime>
 
 using namespace Mooncake;
 
-#define COLOR_INFO fg(fmt::color::yellow_green)
-#define COLOR_WARN fg(fmt::color::gold)
-#define COLOR_ERROR fg(fmt::color::orange_red)
+#define COLOR_INFO fg(fmt::terminal_color::green)
+#define COLOR_WARN fg(fmt::terminal_color::yellow)
+#define COLOR_ERROR fg(fmt::terminal_color::red)
 
 static bool _enable_time_tag = true;
 
@@ -26,23 +27,32 @@ void mclog::setTimeTagEnable(bool enable)
 
 void mclog::internal::printf_tag_time()
 {
-    if (!_enable_time_tag)
+    if (!_enable_time_tag) {
         return;
+    }
 
-    fmt::print("[{:%H:%M:%S}] ", std::chrono::round<std::chrono::seconds>(std::chrono::system_clock::now()));
+    auto time = std::time(NULL);
+    auto tm = std::localtime(&time);
+    fmt::print("[{}] ", std::chrono::system_clock::now());
 }
 
 void mclog::internal::print_tag_info()
 {
-    fmt::print(COLOR_INFO, "[I] ");
+    fmt::print("[");
+    fmt::print(COLOR_INFO, "info");
+    fmt::print("] ");
 }
 
 void mclog::internal::print_tag_warn()
 {
-    fmt::print(COLOR_WARN, "[W] ");
+    fmt::print("[");
+    fmt::print(COLOR_WARN, "warn");
+    fmt::print("] ");
 }
 
 void mclog::internal::print_tag_error()
 {
-    fmt::print(COLOR_ERROR, "[E] ");
+    fmt::print("[");
+    fmt::print(COLOR_ERROR, "error");
+    fmt::print("] ");
 }
