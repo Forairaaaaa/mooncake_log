@@ -31,9 +31,18 @@ void mclog::internal::printf_tag_time()
         return;
     }
 
-    auto time = std::time(NULL);
-    auto tm = std::localtime(&time);
-    fmt::print("[{}] ", std::chrono::system_clock::now());
+    auto now = std::chrono::system_clock::now();
+    auto now_c = std::chrono::system_clock::to_time_t(now);
+    auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()) % 1000;
+
+    fmt::print("[{:04}-{:02}-{:02} {:02}:{:02}:{:02}.{:03}] ",
+               std::localtime(&now_c)->tm_year + 1900, // 年份
+               std::localtime(&now_c)->tm_mon + 1,     // 月
+               std::localtime(&now_c)->tm_mday,        // 日
+               std::localtime(&now_c)->tm_hour,        // 时
+               std::localtime(&now_c)->tm_min,         // 分
+               std::localtime(&now_c)->tm_sec,         // 秒
+               milliseconds.count());                  // 毫秒
 }
 
 void mclog::internal::print_tag_info()
