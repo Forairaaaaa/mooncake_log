@@ -20,7 +20,7 @@ using namespace Mooncake;
 
 static bool _enable_time_tag = true;
 
-void mclog::setTimeTagEnable(bool enable)
+void mclog::set_time_tag_enable(bool enable)
 {
     _enable_time_tag = enable;
 }

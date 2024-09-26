@@ -17,7 +17,7 @@ mclog::error("{}", "6");
 // [2077-03-07 11:45:14.191] [error] 啊？？
 // [2077-03-07 11:45:14.191] [error] 6
 
-mclog::setTimeTagEnable(false);
+mclog::set_time_tag_enable(false);
 mclog::tagInfo("我是沙比", "啊？？");
 mclog::tagInfo("我是沙比", "6");
 // [我是沙比] [info] 啊？？

@@ -30,7 +30,7 @@ int main()
     // [11:45:14] [error] 啊？？
     // [11:45:14] [error] 6
 
-    mclog::setTimeTagEnable(false);
+    mclog::set_time_tag_enable(false);
     mclog::tagInfo("我是沙比", "啊？？");
     mclog::tagInfo("我是沙比", "6");
     // [我是沙比] [info] 啊？？

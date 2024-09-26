@@ -109,6 +109,6 @@ template <typename... Args> void tagError(const std::string &customTag, Args &&.
 }
 
 /* --------------------------------- Setting -------------------------------- */
-void setTimeTagEnable(bool enable);
+void set_time_tag_enable(bool enable);
 }; // namespace mclog
 } // namespace Mooncake
