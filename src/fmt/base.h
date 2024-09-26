@@ -1285,6 +1285,7 @@ template <typename T> struct is_statically_named_arg : std::false_type {};
 template <typename T, typename Char>
 struct is_named_arg<named_arg<Char, T>> : std::true_type {};
 
+#undef B1
 template <bool B = false> constexpr auto count() -> size_t { return B ? 1 : 0; }
 template <bool B1, bool B2, bool... Tail> constexpr auto count() -> size_t {
   return (B1 ? 1 : 0) + count<B2, Tail...>();

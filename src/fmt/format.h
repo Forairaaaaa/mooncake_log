@@ -1649,6 +1649,7 @@ template <typename F> struct basic_fp {
 
 using fp = basic_fp<unsigned long long>;
 
+#undef F
 // Normalizes the value converted from double and multiplied by (1 << SHIFT).
 template <int SHIFT = 0, typename F>
 FMT_CONSTEXPR auto normalize(basic_fp<F> value) -> basic_fp<F> {
