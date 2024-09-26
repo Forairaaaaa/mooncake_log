@@ -11,18 +11,33 @@
 #pragma once
 #include "fmt/base.h"
 #include "fmt/color.h"
+#include "fmt/format.h"
 #include "fmt/ranges.h"
 #include "fmt/chrono.h"
 #include <utility>
+#include <functional>
 
 namespace Mooncake {
 namespace mclog {
+
+enum LogLevel_t {
+    level_info = 0,
+    level_warn,
+    level_error,
+};
+
 namespace internal {
 void printf_tag_time();
 void print_tag_info();
 void print_tag_warn();
 void print_tag_error();
+bool is_on_log_callback_exist();
+void invoke_on_log_callbacks(LogLevel_t level, std::string msg);
 } // namespace internal
+
+/* -------------------------------------------------------------------------- */
+/*                                   Logging                                  */
+/* -------------------------------------------------------------------------- */
 
 /**
  * @brief Log info
@@ -30,11 +45,15 @@ void print_tag_error();
  * @tparam Args
  * @param args
  */
-template <typename... Args> void info(Args &&... args)
+template <typename... Args> void info(Args &&...args)
 {
     internal::printf_tag_time();
     internal::print_tag_info();
     fmt::println(std::forward<Args>(args)...);
+
+    if (internal::is_on_log_callback_exist()) {
+        internal::invoke_on_log_callbacks(level_info, fmt::format(std::forward<Args>(args)...));
+    }
 }
 
 /**
@@ -43,11 +62,15 @@ template <typename... Args> void info(Args &&... args)
  * @tparam Args
  * @param args
  */
-template <typename... Args> void warn(Args &&... args)
+template <typename... Args> void warn(Args &&...args)
 {
     internal::printf_tag_time();
     internal::print_tag_warn();
     fmt::println(std::forward<Args>(args)...);
+
+    if (internal::is_on_log_callback_exist()) {
+        internal::invoke_on_log_callbacks(level_warn, fmt::format(std::forward<Args>(args)...));
+    }
 }
 
 /**
@@ -56,11 +79,15 @@ template <typename... Args> void warn(Args &&... args)
  * @tparam Args
  * @param args
  */
-template <typename... Args> void error(Args &&... args)
+template <typename... Args> void error(Args &&...args)
 {
     internal::printf_tag_time();
     internal::print_tag_error();
     fmt::println(std::forward<Args>(args)...);
+
+    if (internal::is_on_log_callback_exist()) {
+        internal::invoke_on_log_callbacks(level_error, fmt::format(std::forward<Args>(args)...));
+    }
 }
 
 /**
@@ -70,12 +97,16 @@ template <typename... Args> void error(Args &&... args)
  * @param customTag
  * @param args
  */
-template <typename... Args> void tagInfo(const std::string &customTag, Args &&... args)
+template <typename... Args> void tagInfo(const std::string &customTag, Args &&...args)
 {
     internal::printf_tag_time();
     fmt::print("[{}] ", customTag);
     internal::print_tag_info();
     fmt::println(std::forward<Args>(args)...);
+
+    if (internal::is_on_log_callback_exist()) {
+        internal::invoke_on_log_callbacks(level_info, fmt::format(std::forward<Args>(args)...));
+    }
 }
 
 /**
@@ -85,12 +116,16 @@ template <typename... Args> void tagInfo(const std::string &customTag, Args &&..
  * @param customTag
  * @param args
  */
-template <typename... Args> void tagWarn(const std::string &customTag, Args &&... args)
+template <typename... Args> void tagWarn(const std::string &customTag, Args &&...args)
 {
     internal::printf_tag_time();
     fmt::print("[{}] ", customTag);
     internal::print_tag_warn();
     fmt::println(std::forward<Args>(args)...);
+
+    if (internal::is_on_log_callback_exist()) {
+        internal::invoke_on_log_callbacks(level_warn, fmt::format(std::forward<Args>(args)...));
+    }
 }
 
 /**
@@ -100,15 +135,31 @@ template <typename... Args> void tagWarn(const std::string &customTag, Args &&..
  * @param customTag
  * @param args
  */
-template <typename... Args> void tagError(const std::string &customTag, Args &&... args)
+template <typename... Args> void tagError(const std::string &customTag, Args &&...args)
 {
     internal::printf_tag_time();
     fmt::print("[{}] ", customTag);
     internal::print_tag_error();
     fmt::println(std::forward<Args>(args)...);
+
+    if (internal::is_on_log_callback_exist()) {
+        internal::invoke_on_log_callbacks(level_error, fmt::format(std::forward<Args>(args)...));
+    }
 }
 
-/* --------------------------------- Setting -------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                                  Callbacks                                 */
+/* -------------------------------------------------------------------------- */
+typedef std::function<void(LogLevel_t, std::string)> onLogCallback_t;
+
+void add_on_log_callback(onLogCallback_t callback);
+
+void remove_on_log_callbacks();
+
+/* -------------------------------------------------------------------------- */
+/*                                  Settings                                  */
+/* -------------------------------------------------------------------------- */
 void set_time_tag_enable(bool enable);
+
 }; // namespace mclog
 } // namespace Mooncake

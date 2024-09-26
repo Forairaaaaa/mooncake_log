@@ -8,6 +8,8 @@
  * @copyright Copyright (c) 2024
  *
  */
+#include "fmt/base.h"
+#include <iostream>
 #include <mooncake_log.h>
 #include <vector>
 
@@ -35,6 +37,23 @@ int main()
     mclog::tagInfo("我是沙比", "6");
     // [我是沙比] [info] 啊？？
     // [我是沙比] [info]  6
+
+    // 注册 OnLog 回调
+    mclog::add_on_log_callback([](mclog::LogLevel_t level, std::string msg) {
+        fmt::println(">> level: {} msg: {}", static_cast<int>(level), msg);
+    });
+
+    mclog::info("?");
+    // [info] ?
+    // >> level: 0 msg: ?
+
+    mclog::warn("?");
+    // [warn] ?
+    // >> level: 1 msg: ?
+
+    mclog::error("?");
+    // [error] ?
+    // >> level: 2 msg: ?
 
     return 0;
 }
