@@ -1,26 +1,26 @@
-project(AAA)
+project(mooncake_log)
 
 # Src files
-file(GLOB_RECURSE AAA_SRCS
-    ${AAA_ROOT_DIR}/src/*.c
-    ${AAA_ROOT_DIR}/src/*.cc
-    ${AAA_ROOT_DIR}/src/*.cpp
+file(GLOB_RECURSE MOONCAKE_LOG_SRCS
+    ${MOONCAKE_LOG_ROOT_DIR}/src/*.c
+    ${MOONCAKE_LOG_ROOT_DIR}/src/*.cc
+    ${MOONCAKE_LOG_ROOT_DIR}/src/*.cpp
 )
 # Include
-set(AAA_INCS
-    ${AAA_ROOT_DIR}/src/
+set(MOONCAKE_LOG_INCS
+    ${MOONCAKE_LOG_ROOT_DIR}/src/
 )
 
 
-add_library(${PROJECT_NAME} ${AAA_SRCS})
-target_include_directories(${PROJECT_NAME} PUBLIC ${AAA_INCS})
+add_library(${PROJECT_NAME} ${MOONCAKE_LOG_SRCS})
+target_include_directories(${PROJECT_NAME} PUBLIC ${MOONCAKE_LOG_INCS})
 
 
-option(AAA_BUILD_EXAMPLE "Build example" ON)
+option(MOONCAKE_LOG_BUILD_EXAMPLE "Build example" ON)
 
 
 # Example
-if(AAA_BUILD_EXAMPLE)
+if(MOONCAKE_LOG_BUILD_EXAMPLE)
     add_subdirectory(./example/)
 endif()
 
