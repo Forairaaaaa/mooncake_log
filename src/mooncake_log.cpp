@@ -14,7 +14,7 @@
 #include <functional>
 #include <vector>
 
-using namespace Mooncake;
+using namespace mooncake;
 
 #define COLOR_INFO fg(fmt::terminal_color::green)
 #define COLOR_WARN fg(fmt::terminal_color::yellow)

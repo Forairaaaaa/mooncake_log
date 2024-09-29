@@ -9,11 +9,10 @@
  *
  */
 #include "fmt/base.h"
-#include <iostream>
 #include <mooncake_log.h>
 #include <vector>
 
-using namespace Mooncake;
+using namespace mooncake;
 
 int main()
 {
