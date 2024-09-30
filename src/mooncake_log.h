@@ -45,14 +45,15 @@ void invoke_on_log_callbacks(LogLevel_t level, std::string msg);
  * @tparam Args
  * @param args
  */
-template <typename... Args> void info(Args&&... args)
+template <typename... Args>
+void info(fmt::format_string<Args...> fmt, Args&&... args)
 {
     internal::printf_tag_time();
     internal::print_tag_info();
-    fmt::println(std::forward<Args>(args)...);
+    fmt::println(fmt, std::forward<Args>(args)...);
 
     if (internal::is_on_log_callback_exist()) {
-        internal::invoke_on_log_callbacks(level_info, fmt::format(std::forward<Args>(args)...));
+        internal::invoke_on_log_callbacks(level_info, fmt::format(fmt, std::forward<Args>(args)...));
     }
 }
 
@@ -62,14 +63,15 @@ template <typename... Args> void info(Args&&... args)
  * @tparam Args
  * @param args
  */
-template <typename... Args> void warn(Args&&... args)
+template <typename... Args>
+void warn(fmt::format_string<Args...> fmt, Args&&... args)
 {
     internal::printf_tag_time();
     internal::print_tag_warn();
-    fmt::println(std::forward<Args>(args)...);
+    fmt::println(fmt, std::forward<Args>(args)...);
 
     if (internal::is_on_log_callback_exist()) {
-        internal::invoke_on_log_callbacks(level_warn, fmt::format(std::forward<Args>(args)...));
+        internal::invoke_on_log_callbacks(level_warn, fmt::format(fmt, std::forward<Args>(args)...));
     }
 }
 
@@ -79,14 +81,15 @@ template <typename... Args> void warn(Args&&... args)
  * @tparam Args
  * @param args
  */
-template <typename... Args> void error(Args&&... args)
+template <typename... Args>
+void error(fmt::format_string<Args...> fmt, Args&&... args)
 {
     internal::printf_tag_time();
     internal::print_tag_error();
-    fmt::println(std::forward<Args>(args)...);
+    fmt::println(fmt, std::forward<Args>(args)...);
 
     if (internal::is_on_log_callback_exist()) {
-        internal::invoke_on_log_callbacks(level_error, fmt::format(std::forward<Args>(args)...));
+        internal::invoke_on_log_callbacks(level_error, fmt::format(fmt, std::forward<Args>(args)...));
     }
 }
 
@@ -95,17 +98,19 @@ template <typename... Args> void error(Args&&... args)
  *
  * @tparam Args
  * @param customTag
+ * @param fmt
  * @param args
  */
-template <typename... Args> void tagInfo(const std::string& customTag, Args&&... args)
+template <typename... Args>
+void tagInfo(const std::string& customTag, fmt::format_string<Args...> fmt, Args&&... args)
 {
     internal::printf_tag_time();
     fmt::print("[{}] ", customTag);
     internal::print_tag_info();
-    fmt::println(std::forward<Args>(args)...);
+    fmt::println(fmt, std::forward<Args>(args)...);
 
     if (internal::is_on_log_callback_exist()) {
-        internal::invoke_on_log_callbacks(level_info, fmt::format(std::forward<Args>(args)...));
+        internal::invoke_on_log_callbacks(level_info, fmt::format(fmt, std::forward<Args>(args)...));
     }
 }
 
@@ -114,17 +119,19 @@ template <typename... Args> void tagInfo(const std::string& customTag, Args&&...
  *
  * @tparam Args
  * @param customTag
+ * @param fmt
  * @param args
  */
-template <typename... Args> void tagWarn(const std::string& customTag, Args&&... args)
+template <typename... Args>
+void tagWarn(const std::string& customTag, fmt::format_string<Args...> fmt, Args&&... args)
 {
     internal::printf_tag_time();
     fmt::print("[{}] ", customTag);
     internal::print_tag_warn();
-    fmt::println(std::forward<Args>(args)...);
+    fmt::println(fmt, std::forward<Args>(args)...);
 
     if (internal::is_on_log_callback_exist()) {
-        internal::invoke_on_log_callbacks(level_warn, fmt::format(std::forward<Args>(args)...));
+        internal::invoke_on_log_callbacks(level_warn, fmt::format(fmt, std::forward<Args>(args)...));
     }
 }
 
@@ -133,17 +140,19 @@ template <typename... Args> void tagWarn(const std::string& customTag, Args&&...
  *
  * @tparam Args
  * @param customTag
+ * @param fmt
  * @param args
  */
-template <typename... Args> void tagError(const std::string& customTag, Args&&... args)
+template <typename... Args>
+void tagError(const std::string& customTag, fmt::format_string<Args...> fmt, Args&&... args)
 {
     internal::printf_tag_time();
     fmt::print("[{}] ", customTag);
     internal::print_tag_error();
-    fmt::println(std::forward<Args>(args)...);
+    fmt::println(fmt, std::forward<Args>(args)...);
 
     if (internal::is_on_log_callback_exist()) {
-        internal::invoke_on_log_callbacks(level_error, fmt::format(std::forward<Args>(args)...));
+        internal::invoke_on_log_callbacks(level_error, fmt::format(fmt, std::forward<Args>(args)...));
     }
 }
 
