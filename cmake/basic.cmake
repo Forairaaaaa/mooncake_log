@@ -1,5 +1,7 @@
 project(mooncake_log)
 
+cmake_policy(SET CMP0077 NEW)
+
 # Src files
 file(GLOB_RECURSE MOONCAKE_LOG_SRCS
     ${MOONCAKE_LOG_ROOT_DIR}/src/*.c
