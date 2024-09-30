@@ -71,7 +71,7 @@ void mclog::internal::print_tag_error()
 /* -------------------------------------------------------------------------- */
 /*                                  Callbacks                                 */
 /* -------------------------------------------------------------------------- */
-static std::vector<mclog::onLogCallback_t> *_on_log_callback_list = nullptr;
+static std::vector<mclog::onLogCallback_t>* _on_log_callback_list = nullptr;
 
 bool mclog::internal::is_on_log_callback_exist()
 {
@@ -84,7 +84,7 @@ void mclog::internal::invoke_on_log_callbacks(LogLevel_t level, std::string msg)
         return;
     }
 
-    for (const auto &callback : *_on_log_callback_list) {
+    for (const auto& callback : *_on_log_callback_list) {
         callback(level, msg);
     }
 }

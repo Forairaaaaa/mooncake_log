@@ -45,7 +45,7 @@ void invoke_on_log_callbacks(LogLevel_t level, std::string msg);
  * @tparam Args
  * @param args
  */
-template <typename... Args> void info(Args &&...args)
+template <typename... Args> void info(Args&&... args)
 {
     internal::printf_tag_time();
     internal::print_tag_info();
@@ -62,7 +62,7 @@ template <typename... Args> void info(Args &&...args)
  * @tparam Args
  * @param args
  */
-template <typename... Args> void warn(Args &&...args)
+template <typename... Args> void warn(Args&&... args)
 {
     internal::printf_tag_time();
     internal::print_tag_warn();
@@ -79,7 +79,7 @@ template <typename... Args> void warn(Args &&...args)
  * @tparam Args
  * @param args
  */
-template <typename... Args> void error(Args &&...args)
+template <typename... Args> void error(Args&&... args)
 {
     internal::printf_tag_time();
     internal::print_tag_error();
@@ -97,7 +97,7 @@ template <typename... Args> void error(Args &&...args)
  * @param customTag
  * @param args
  */
-template <typename... Args> void tagInfo(const std::string &customTag, Args &&...args)
+template <typename... Args> void tagInfo(const std::string& customTag, Args&&... args)
 {
     internal::printf_tag_time();
     fmt::print("[{}] ", customTag);
@@ -116,7 +116,7 @@ template <typename... Args> void tagInfo(const std::string &customTag, Args &&..
  * @param customTag
  * @param args
  */
-template <typename... Args> void tagWarn(const std::string &customTag, Args &&...args)
+template <typename... Args> void tagWarn(const std::string& customTag, Args&&... args)
 {
     internal::printf_tag_time();
     fmt::print("[{}] ", customTag);
@@ -135,7 +135,7 @@ template <typename... Args> void tagWarn(const std::string &customTag, Args &&..
  * @param customTag
  * @param args
  */
-template <typename... Args> void tagError(const std::string &customTag, Args &&...args)
+template <typename... Args> void tagError(const std::string& customTag, Args&&... args)
 {
     internal::printf_tag_time();
     fmt::print("[{}] ", customTag);
