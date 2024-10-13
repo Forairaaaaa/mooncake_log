@@ -16,8 +16,8 @@
 
 using namespace mooncake;
 
-#define COLOR_INFO fg(fmt::terminal_color::green)
-#define COLOR_WARN fg(fmt::terminal_color::yellow)
+#define COLOR_INFO  fg(fmt::terminal_color::green)
+#define COLOR_WARN  fg(fmt::terminal_color::yellow)
 #define COLOR_ERROR fg(fmt::terminal_color::red)
 
 static bool _enable_time_tag = true;

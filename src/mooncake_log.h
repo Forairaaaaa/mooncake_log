@@ -105,8 +105,8 @@ template <typename... Args>
 void tagInfo(const std::string& customTag, fmt::format_string<Args...> fmt, Args&&... args)
 {
     internal::printf_tag_time();
-    fmt::print("[{}] ", customTag);
     internal::print_tag_info();
+    fmt::print("[{}] ", customTag);
     fmt::println(fmt, std::forward<Args>(args)...);
 
     if (internal::is_on_log_callback_exist()) {
@@ -126,8 +126,8 @@ template <typename... Args>
 void tagWarn(const std::string& customTag, fmt::format_string<Args...> fmt, Args&&... args)
 {
     internal::printf_tag_time();
-    fmt::print("[{}] ", customTag);
     internal::print_tag_warn();
+    fmt::print("[{}] ", customTag);
     fmt::println(fmt, std::forward<Args>(args)...);
 
     if (internal::is_on_log_callback_exist()) {
@@ -147,8 +147,8 @@ template <typename... Args>
 void tagError(const std::string& customTag, fmt::format_string<Args...> fmt, Args&&... args)
 {
     internal::printf_tag_time();
-    fmt::print("[{}] ", customTag);
     internal::print_tag_error();
+    fmt::print("[{}] ", customTag);
     fmt::println(fmt, std::forward<Args>(args)...);
 
     if (internal::is_on_log_callback_exist()) {

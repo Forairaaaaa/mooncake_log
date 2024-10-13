@@ -20,8 +20,8 @@ mclog::error("{}", "6");
 mclog::set_time_tag_enable(false);
 mclog::tagInfo("我是沙比", "啊？？");
 mclog::tagInfo("我是沙比", "6");
-// [我是沙比] [info] 啊？？
-// [我是沙比] [info]  6
+// [info] [我是沙比] 啊？？
+// [info] [我是沙比] 6
 
 // 注册 OnLog 回调
 mclog::add_on_log_callback([](mclog::LogLevel_t level, std::string msg) {
