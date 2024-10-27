@@ -24,6 +24,7 @@ enum LogLevel_t {
     level_info = 0,
     level_warn,
     level_error,
+    level_debug,
 };
 
 namespace internal {
@@ -31,6 +32,7 @@ void printf_tag_time();
 void print_tag_info();
 void print_tag_warn();
 void print_tag_error();
+void print_tag_debug();
 bool is_on_log_callback_exist();
 void invoke_on_log_callbacks(LogLevel_t level, std::string msg);
 } // namespace internal
@@ -94,6 +96,24 @@ void error(fmt::format_string<Args...> fmt, Args&&... args)
 }
 
 /**
+ * @brief Log debug
+ *
+ * @tparam Args
+ * @param args
+ */
+template <typename... Args>
+void debug(fmt::format_string<Args...> fmt, Args&&... args)
+{
+    internal::printf_tag_time();
+    internal::print_tag_debug();
+    fmt::println(fmt, std::forward<Args>(args)...);
+
+    if (internal::is_on_log_callback_exist()) {
+        internal::invoke_on_log_callbacks(level_debug, fmt::format(fmt, std::forward<Args>(args)...));
+    }
+}
+
+/**
  * @brief Log info with a custom tag
  *
  * @tparam Args
@@ -153,6 +173,27 @@ void tagError(const std::string& customTag, fmt::format_string<Args...> fmt, Arg
 
     if (internal::is_on_log_callback_exist()) {
         internal::invoke_on_log_callbacks(level_error, fmt::format(fmt, std::forward<Args>(args)...));
+    }
+}
+
+/**
+ * @brief Log debug with a custom tag
+ *
+ * @tparam Args
+ * @param customTag
+ * @param fmt
+ * @param args
+ */
+template <typename... Args>
+void tagDebug(const std::string& customTag, fmt::format_string<Args...> fmt, Args&&... args)
+{
+    internal::printf_tag_time();
+    internal::print_tag_debug();
+    fmt::print("[{}] ", customTag);
+    fmt::println(fmt, std::forward<Args>(args)...);
+
+    if (internal::is_on_log_callback_exist()) {
+        internal::invoke_on_log_callbacks(level_debug, fmt::format(fmt, std::forward<Args>(args)...));
     }
 }
 

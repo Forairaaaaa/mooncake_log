@@ -19,6 +19,7 @@ using namespace mooncake;
 #define COLOR_INFO  fg(fmt::terminal_color::green)
 #define COLOR_WARN  fg(fmt::terminal_color::yellow)
 #define COLOR_ERROR fg(fmt::terminal_color::red)
+#define COLOR_DEBUG fg(fmt::terminal_color::blue)
 
 static bool _enable_time_tag = true;
 
@@ -65,6 +66,13 @@ void mclog::internal::print_tag_error()
 {
     fmt::print("[");
     fmt::print(COLOR_ERROR, "error");
+    fmt::print("] ");
+}
+
+void mclog::internal::print_tag_debug()
+{
+    fmt::print("[");
+    fmt::print(COLOR_DEBUG, "debug");
     fmt::print("] ");
 }
 
