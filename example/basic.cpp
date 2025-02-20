@@ -12,8 +12,6 @@
 #include <mooncake_log.h>
 #include <vector>
 
-using namespace mooncake;
-
 int main()
 {
     mclog::info("啊？？ {} ..??? 0x{:02X}", 114514, 66);

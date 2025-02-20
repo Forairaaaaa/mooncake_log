@@ -17,7 +17,6 @@
 #include <utility>
 #include <functional>
 
-namespace mooncake {
 namespace mclog {
 
 enum LogLevel_t {
@@ -212,4 +211,3 @@ void remove_on_log_callbacks();
 void set_time_tag_enable(bool enable);
 
 }; // namespace mclog
-} // namespace mooncake
