@@ -9,6 +9,7 @@
 #define FMT_COLOR_H_
 
 #include "format.h"
+#include <algorithm>
 
 FMT_BEGIN_NAMESPACE
 FMT_BEGIN_EXPORT
