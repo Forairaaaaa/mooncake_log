@@ -16,24 +16,34 @@ int main()
 {
     mclog::info("啊？？ {} ..??? 0x{:02X}", 114514, 66);
     mclog::info("{}", std::vector<int>{1, 23, 4, 5});
-    // [11:45:14] [info] 啊？？ 114514 ..??? 0x42
-    // [11:45:14] [info] [1, 23, 4, 5]
+    // [2025-06-06 12.34.56.123] [info] 啊？？ 114514 ..??? 0x42
+    // [2025-06-06 12.34.56.123] [info] [1, 23, 4, 5]
 
     mclog::warn("啊？？");
     mclog::warn("{}", "6");
-    // [11:45:14] [warn] 啊？？
-    // [11:45:14] [warn] 6
+    // [2025-06-06 12.34.56.123] [warn] 啊？？
+    // [2025-06-06 12.34.56.123] [warn] 6
 
     mclog::error("啊？？");
     mclog::error("{}", "6");
-    // [11:45:14] [error] 啊？？
-    // [11:45:14] [error] 6
+    // [2025-06-06 12.34.56.123] [error] 啊？？
+    // [2025-06-06 12.34.56.123] [error] 6
 
-    mclog::set_time_tag_enable(false);
-    mclog::tagInfo("我是沙比", "啊？？");
-    mclog::tagInfo("我是沙比", "6");
-    // [我是沙比] [info] 啊？？
-    // [我是沙比] [info]  6
+    mclog::debug("you can't see me now");
+    mclog::set_level(mclog::LogLevel_t::level_debug);
+    mclog::debug("dddddddddddddddeeeeeeeeeebuggggggggggggggggggiiiinnnnnnggg");
+    // [2025-06-06 12.34.56.123] [debug] dddddddddddddddeeeeeeeeeebuggggggggggggggggggiiiinnnnnnggg
+
+    mclog::get_settings().enable_time_tag = false;
+    mclog::info("????");
+    // [info] ????
+
+    mclog::get_settings().enable_level_tag = false;
+    mclog::info("????");
+    // ????
+
+    mclog::get_settings().enable_time_tag = true;
+    mclog::get_settings().enable_level_tag = true;
 
     // 注册 OnLog 回调
     mclog::on_log.connect([](mclog::LogLevel_t level, std::string msg) {
@@ -51,6 +61,10 @@ int main()
     mclog::error("?");
     // [error] ?
     // >> level: 2 msg: ?
+
+    mclog::debug("?");
+    // [debug] ?
+    // >> level: 3 msg: ?
 
     return 0;
 }

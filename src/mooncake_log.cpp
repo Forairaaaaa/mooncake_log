@@ -19,18 +19,28 @@
 #define COLOR_ERROR fg(fmt::terminal_color::red)
 #define COLOR_DEBUG fg(fmt::terminal_color::blue)
 
-static bool _enable_time_tag = true;
-
 mclog::Signal<mclog::LogLevel_t, std::string> mclog::on_log;
 
-void mclog::set_time_tag_enable(bool enable)
+static mclog::Settings_t _settings;
+
+mclog::Settings_t& mclog::get_settings()
 {
-    _enable_time_tag = enable;
+    return _settings;
 }
 
-void mclog::internal::printf_tag_time()
+void mclog::set_level(LogLevel_t level)
 {
-    if (!_enable_time_tag) {
+    get_settings().log_level = level;
+}
+
+bool mclog::internal::should_i_go(const LogLevel_t& level)
+{
+    return level > get_settings().log_level;
+}
+
+void mclog::internal::print_tag_time()
+{
+    if (!_settings.enable_time_tag) {
         return;
     }
 
@@ -48,30 +58,31 @@ void mclog::internal::printf_tag_time()
                milliseconds.count());                  // 毫秒
 }
 
-void mclog::internal::print_tag_info()
+void mclog::internal::print_tag_level(const LogLevel_t& level)
 {
-    fmt::print("[");
-    fmt::print(COLOR_INFO, "info");
-    fmt::print("] ");
-}
+    if (!_settings.enable_level_tag) {
+        return;
+    }
 
-void mclog::internal::print_tag_warn()
-{
     fmt::print("[");
-    fmt::print(COLOR_WARN, "warn");
-    fmt::print("] ");
-}
 
-void mclog::internal::print_tag_error()
-{
-    fmt::print("[");
-    fmt::print(COLOR_ERROR, "error");
-    fmt::print("] ");
-}
+    switch (level) {
+        case LogLevel_t::level_info:
+            fmt::print(COLOR_INFO, "info");
+            break;
+        case LogLevel_t::level_warn:
+            fmt::print(COLOR_WARN, "warn");
+            break;
+        case LogLevel_t::level_error:
+            fmt::print(COLOR_ERROR, "error");
+            break;
+        case LogLevel_t::level_debug:
+            fmt::print(COLOR_DEBUG, "debug");
+            break;
+        default:
+            fmt::print(COLOR_DEBUG, "wtf");
+            break;
+    }
 
-void mclog::internal::print_tag_debug()
-{
-    fmt::print("[");
-    fmt::print(COLOR_DEBUG, "debug");
     fmt::print("] ");
 }

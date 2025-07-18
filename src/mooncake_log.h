@@ -25,22 +25,37 @@ enum LogLevel_t {
     level_debug,
 };
 
+struct Settings_t {
+    bool enable_time_tag = true;
+    bool enable_level_tag = true;
+    LogLevel_t log_level = level_error;
+};
+
 namespace internal {
-void printf_tag_time();
-void print_tag_info();
-void print_tag_warn();
-void print_tag_error();
-void print_tag_debug();
+void print_tag_time();
+void print_tag_level(const LogLevel_t& level);
+bool should_i_go(const LogLevel_t& level);
 } // namespace internal
 
-/* -------------------------------------------------------------------------- */
-/*                                  Callback                                  */
-/* -------------------------------------------------------------------------- */
+/**
+ * @brief On log signal.
+ *
+ */
 extern Signal<LogLevel_t, std::string> on_log;
 
-/* -------------------------------------------------------------------------- */
-/*                                   Logging                                  */
-/* -------------------------------------------------------------------------- */
+/**
+ * @brief Get logging settings.
+ *
+ * @return Settings_t&
+ */
+Settings_t& get_settings();
+
+/**
+ * @brief Set logging level.
+ *
+ * @param level
+ */
+void set_level(LogLevel_t level);
 
 /**
  * @brief Log info
@@ -51,8 +66,12 @@ extern Signal<LogLevel_t, std::string> on_log;
 template <typename... Args>
 void info(fmt::format_string<Args...> fmt, Args&&... args)
 {
-    internal::printf_tag_time();
-    internal::print_tag_info();
+    if (internal::should_i_go(level_info)) {
+        return;
+    }
+
+    internal::print_tag_time();
+    internal::print_tag_level(level_info);
     fmt::println(fmt, std::forward<Args>(args)...);
 
     on_log.emit(level_info, fmt::format(fmt, std::forward<Args>(args)...));
@@ -67,8 +86,12 @@ void info(fmt::format_string<Args...> fmt, Args&&... args)
 template <typename... Args>
 void warn(fmt::format_string<Args...> fmt, Args&&... args)
 {
-    internal::printf_tag_time();
-    internal::print_tag_warn();
+    if (internal::should_i_go(level_warn)) {
+        return;
+    }
+
+    internal::print_tag_time();
+    internal::print_tag_level(level_warn);
     fmt::println(fmt, std::forward<Args>(args)...);
 
     on_log.emit(level_warn, fmt::format(fmt, std::forward<Args>(args)...));
@@ -83,8 +106,12 @@ void warn(fmt::format_string<Args...> fmt, Args&&... args)
 template <typename... Args>
 void error(fmt::format_string<Args...> fmt, Args&&... args)
 {
-    internal::printf_tag_time();
-    internal::print_tag_error();
+    if (internal::should_i_go(level_error)) {
+        return;
+    }
+
+    internal::print_tag_time();
+    internal::print_tag_level(level_error);
     fmt::println(fmt, std::forward<Args>(args)...);
 
     on_log.emit(level_error, fmt::format(fmt, std::forward<Args>(args)...));
@@ -99,92 +126,15 @@ void error(fmt::format_string<Args...> fmt, Args&&... args)
 template <typename... Args>
 void debug(fmt::format_string<Args...> fmt, Args&&... args)
 {
-    internal::printf_tag_time();
-    internal::print_tag_debug();
+    if (internal::should_i_go(level_debug)) {
+        return;
+    }
+
+    internal::print_tag_time();
+    internal::print_tag_level(level_debug);
     fmt::println(fmt, std::forward<Args>(args)...);
 
     on_log.emit(level_debug, fmt::format(fmt, std::forward<Args>(args)...));
 }
 
-/**
- * @brief Log info with a custom tag
- *
- * @tparam Args
- * @param customTag
- * @param fmt
- * @param args
- */
-template <typename... Args>
-void tagInfo(const std::string& customTag, fmt::format_string<Args...> fmt, Args&&... args)
-{
-    internal::printf_tag_time();
-    internal::print_tag_info();
-    fmt::print("[{}] ", customTag);
-    fmt::println(fmt, std::forward<Args>(args)...);
-
-    on_log.emit(level_info, fmt::format(fmt, std::forward<Args>(args)...));
-}
-
-/**
- * @brief Log warning with a custom tag
- *
- * @tparam Args
- * @param customTag
- * @param fmt
- * @param args
- */
-template <typename... Args>
-void tagWarn(const std::string& customTag, fmt::format_string<Args...> fmt, Args&&... args)
-{
-    internal::printf_tag_time();
-    internal::print_tag_warn();
-    fmt::print("[{}] ", customTag);
-    fmt::println(fmt, std::forward<Args>(args)...);
-
-    on_log.emit(level_warn, fmt::format(fmt, std::forward<Args>(args)...));
-}
-
-/**
- * @brief Log error with a custom tag
- *
- * @tparam Args
- * @param customTag
- * @param fmt
- * @param args
- */
-template <typename... Args>
-void tagError(const std::string& customTag, fmt::format_string<Args...> fmt, Args&&... args)
-{
-    internal::printf_tag_time();
-    internal::print_tag_error();
-    fmt::print("[{}] ", customTag);
-    fmt::println(fmt, std::forward<Args>(args)...);
-
-    on_log.emit(level_error, fmt::format(fmt, std::forward<Args>(args)...));
-}
-
-/**
- * @brief Log debug with a custom tag
- *
- * @tparam Args
- * @param customTag
- * @param fmt
- * @param args
- */
-template <typename... Args>
-void tagDebug(const std::string& customTag, fmt::format_string<Args...> fmt, Args&&... args)
-{
-    internal::printf_tag_time();
-    internal::print_tag_debug();
-    fmt::print("[{}] ", customTag);
-    fmt::println(fmt, std::forward<Args>(args)...);
-
-    on_log.emit(level_debug, fmt::format(fmt, std::forward<Args>(args)...));
-}
-
-/* -------------------------------------------------------------------------- */
-/*                                  Settings                                  */
-/* -------------------------------------------------------------------------- */
-void set_time_tag_enable(bool enable);
-
-}; // namespace mclog
+} // namespace mclog
