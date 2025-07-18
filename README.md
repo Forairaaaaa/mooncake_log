@@ -97,4 +97,8 @@ mclog::error("?");
 mclog::debug("?");
 // [debug] ?
 // >> level: 3 msg: ?
+
+mclog::on_log.clear();
+mclog::info("clear on log callback");
+// [2025-06-06 12.34.56.123] [info] clear on log callback
 ```

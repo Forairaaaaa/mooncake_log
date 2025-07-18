@@ -106,20 +106,24 @@ void on_log_callback()
     });
 
     mclog::info("?");
-    // [info] ?
+    // [2025-06-06 12.34.56.123]  [info] ?
     // >> level: 0 msg: ?
 
     mclog::warn("?");
-    // [warn] ?
+    // [2025-06-06 12.34.56.123] [warn] ?
     // >> level: 1 msg: ?
 
     mclog::error("?");
-    // [error] ?
+    // [2025-06-06 12.34.56.123] [error] ?
     // >> level: 2 msg: ?
 
     mclog::debug("?");
-    // [debug] ?
+    // [2025-06-06 12.34.56.123] [debug] ?
     // >> level: 3 msg: ?
+
+    mclog::on_log.clear();
+    mclog::info("clear on log callback");
+    // [2025-06-06 12.34.56.123] [info] clear on log callback
 
     fmt::println("");
 }
