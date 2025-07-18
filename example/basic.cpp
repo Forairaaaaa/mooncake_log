@@ -16,19 +16,19 @@ void basic_logging()
 {
     fmt::println("basic logging:");
 
-    mclog::info("啊？？ {} ..??? 0x{:02X}", 114514, 66);
+    mclog::info("?? {} ..??? 0x{:02X}", 114514, 66);
     mclog::info("{}", std::vector<int>{1, 23, 4, 5});
-    // [2025-06-06 12.34.56.123] [info] 啊？？ 114514 ..??? 0x42
+    // [2025-06-06 12.34.56.123] [info] ?? 114514 ..??? 0x42
     // [2025-06-06 12.34.56.123] [info] [1, 23, 4, 5]
 
-    mclog::warn("啊？？");
+    mclog::warn("???");
     mclog::warn("{}", "6");
-    // [2025-06-06 12.34.56.123] [warn] 啊？？
+    // [2025-06-06 12.34.56.123] [warn] ???
     // [2025-06-06 12.34.56.123] [warn] 6
 
-    mclog::error("啊？？");
+    mclog::error("???");
     mclog::error("{}", "6");
-    // [2025-06-06 12.34.56.123] [error] 啊？？
+    // [2025-06-06 12.34.56.123] [error] ???
     // [2025-06-06 12.34.56.123] [error] 6
 
     fmt::println("");
@@ -39,6 +39,7 @@ void logging_level()
     fmt::println("logging level:");
 
     mclog::debug("you can't see me now");
+    // > no shit
     mclog::set_level(mclog::level_debug);
     mclog::debug("dddddddddddddddeeeeeeeeeebuggggggggggggggggggiiiinnnnnnggg");
     // [2025-06-06 12.34.56.123] [debug] dddddddddddddddeeeeeeeeeebuggggggggggggggggggiiiinnnnnnggg

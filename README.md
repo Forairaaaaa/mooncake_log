@@ -1,35 +1,100 @@
 # Mooncake Log
+
 只是 [fmt](https://github.com/fmtlib/fmt) 的简单封装
 
+### Basic logging
+
 ```cpp
-mclog::info("啊？？ {} ..??? 0x{:02X}", 114514, 66);
+mclog::info("?? {} ..??? 0x{:02X}", 114514, 66);
 mclog::info("{}", std::vector<int>{1, 23, 4, 5});
-// [2077-03-07 11:45:14.191] [info] 啊？？ 114514 ..??? 0x42
-// [2077-03-07 11:45:14.191] [info] [1, 23, 4, 5]
+// [2025-06-06 12.34.56.123] [info] ?? 114514 ..??? 0x42
+// [2025-06-06 12.34.56.123] [info] [1, 23, 4, 5]
 
-mclog::warn("啊？？");
+mclog::warn("???");
 mclog::warn("{}", "6");
-// [2077-03-07 11:45:14.191] [warn] 啊？？
-// [2077-03-07 11:45:14.191] [warn] 6
+// [2025-06-06 12.34.56.123] [warn] ???
+// [2025-06-06 12.34.56.123] [warn] 6
 
-mclog::error("啊？？");
+mclog::error("???");
 mclog::error("{}", "6");
-// [2077-03-07 11:45:14.191] [error] 啊？？
-// [2077-03-07 11:45:14.191] [error] 6
+// [2025-06-06 12.34.56.123] [error] ???
+// [2025-06-06 12.34.56.123] [error] 6
+```
 
-mclog::set_time_tag_enable(false);
-mclog::tagInfo("我是沙比", "啊？？");
-mclog::tagInfo("我是沙比", "6");
-// [info] [我是沙比] 啊？？
-// [info] [我是沙比] 6
+### Log level
 
-// 注册 OnLog 回调
-mclog::add_on_log_callback([](mclog::LogLevel_t level, std::string msg) {
+```cpp
+mclog::debug("you can't see me now");
+// > no shit
+mclog::set_level(mclog::level_debug);
+mclog::debug("dddddddddddddddeeeeeeeeeebuggggggggggggggggggiiiinnnnnnggg");
+// [2025-06-06 12.34.56.123] [debug] dddddddddddddddeeeeeeeeeebuggggggggggggggggggiiiinnnnnnggg
+```
+
+### Time format
+
+```cpp
+mclog::set_time_format(mclog::time_format_none);
+mclog::info("time format: none");
+// [info] time format: none
+
+mclog::set_time_format(mclog::time_format_time_only);
+mclog::info("time format: time only");
+// [12.34.56.123] [info] time format: time only
+
+mclog::set_time_format(mclog::time_format_unix_seconds);
+mclog::info("time format: unix seconds");
+// [1752825074] [info] time format: unix seconds
+
+mclog::set_time_format(mclog::time_format_unix_milliseconds);
+mclog::info("time format: unix milliseconds");
+// [1752825074337] [info] time format: unix milliseconds
+
+mclog::set_time_format(mclog::time_format_full);
+mclog::info("time format: full (default)");
+// [2025-06-06 12.34.56.123] [info] time format: full (default)
+```
+
+### Level format
+
+```cpp
+mclog::set_level_tag_format(mclog::level_format_none);
+mclog::info("level tag format: none");
+// [2025-06-06 12.34.56.123] [info] level tag format: none
+
+mclog::set_level_tag_format(mclog::level_format_uppercase);
+mclog::info("level tag format: uppercase");
+// [2025-06-06 12.34.56.123] [INFO] level tag format: uppercase
+
+mclog::set_level_tag_format(mclog::level_format_single_letter);
+mclog::info("level tag format: single letter");
+// [2025-06-06 12.34.56.123] [I] level tag format: single letter
+
+mclog::set_level_tag_format(mclog::level_format_lowercase);
+mclog::info("level tag format: lowercase (default)");
+// [2025-06-06 12.34.56.123] [info] level tag format: lowercase (default)
+```
+
+### On log callback
+
+```cpp
+mclog::on_log.connect([](mclog::LogLevel_t level, const std::string& msg) {
     fmt::println(">> level: {} msg: {}", static_cast<int>(level), msg);
 });
 
 mclog::info("?");
 // [info] ?
 // >> level: 0 msg: ?
-```
 
+mclog::warn("?");
+// [warn] ?
+// >> level: 1 msg: ?
+
+mclog::error("?");
+// [error] ?
+// >> level: 2 msg: ?
+
+mclog::debug("?");
+// [debug] ?
+// >> level: 3 msg: ?
+```
