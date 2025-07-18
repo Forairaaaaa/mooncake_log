@@ -49,7 +49,11 @@ struct Settings_t {
 namespace internal {
 void print_tag_time();
 void print_tag_level(const LogLevel_t& level);
-bool should_i_go(const LogLevel_t& level);
+LogLevel_t get_log_level();
+inline bool should_i_go(const LogLevel_t& level)
+{
+    return level > get_log_level();
+}
 } // namespace internal
 
 /**

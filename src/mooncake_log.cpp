@@ -23,6 +23,11 @@ mclog::Signal<mclog::LogLevel_t, const std::string&> mclog::on_log;
 
 static mclog::Settings_t _settings;
 
+mclog::LogLevel_t mclog::internal::get_log_level()
+{
+    return _settings.log_level;
+}
+
 void mclog::set_level(LogLevel_t level)
 {
     _settings.log_level = level;
@@ -36,11 +41,6 @@ void mclog::set_time_format(TimeFormat_t format)
 void mclog::set_level_tag_format(LevelFormat_t format)
 {
     _settings.level_format = format;
-}
-
-bool mclog::internal::should_i_go(const LogLevel_t& level)
-{
-    return level > _settings.log_level;
 }
 
 void mclog::internal::print_tag_time()
