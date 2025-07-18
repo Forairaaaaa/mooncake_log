@@ -77,11 +77,11 @@ void set_level(LogLevel_t level);
 void set_time_format(TimeFormat_t format);
 
 /**
- * @brief Set level tag format.
+ * @brief Set level format.
  *
  * @param format
  */
-void set_level_tag_format(LevelFormat_t format);
+void set_level_format(LevelFormat_t format);
 
 /**
  * @brief Log info

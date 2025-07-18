@@ -61,21 +61,21 @@ mclog::info("time format: full (default)");
 ### Level format
 
 ```cpp
-mclog::set_level_tag_format(mclog::level_format_none);
-mclog::info("level tag format: none");
-// [2025-06-06 12.34.56.123] [info] level tag format: none
+mclog::set_level_format(mclog::level_format_none);
+mclog::info("level format: none");
+// [2025-06-06 12.34.56.123] [info] level format: none
 
-mclog::set_level_tag_format(mclog::level_format_uppercase);
-mclog::info("level tag format: uppercase");
-// [2025-06-06 12.34.56.123] [INFO] level tag format: uppercase
+mclog::set_level_format(mclog::level_format_uppercase);
+mclog::info("level format: uppercase");
+// [2025-06-06 12.34.56.123] [INFO] level format: uppercase
 
-mclog::set_level_tag_format(mclog::level_format_single_letter);
-mclog::info("level tag format: single letter");
-// [2025-06-06 12.34.56.123] [I] level tag format: single letter
+mclog::set_level_format(mclog::level_format_single_letter);
+mclog::info("level format: single letter");
+// [2025-06-06 12.34.56.123] [I] level format: single letter
 
-mclog::set_level_tag_format(mclog::level_format_lowercase);
-mclog::info("level tag format: lowercase (default)");
-// [2025-06-06 12.34.56.123] [info] level tag format: lowercase (default)
+mclog::set_level_format(mclog::level_format_lowercase);
+mclog::info("level format: lowercase (default)");
+// [2025-06-06 12.34.56.123] [info] level format: lowercase (default)
 ```
 
 ### On log callback

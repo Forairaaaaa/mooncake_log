@@ -38,7 +38,7 @@ void mclog::set_time_format(TimeFormat_t format)
     _settings.time_format = format;
 }
 
-void mclog::set_level_tag_format(LevelFormat_t format)
+void mclog::set_level_format(LevelFormat_t format)
 {
     _settings.level_format = format;
 }
