@@ -14,8 +14,7 @@
 #include "fmt/format.h"
 #include "fmt/ranges.h"
 #include "fmt/chrono.h"
-#include <utility>
-#include <functional>
+#include "signal.h"
 
 namespace mclog {
 
@@ -32,9 +31,12 @@ void print_tag_info();
 void print_tag_warn();
 void print_tag_error();
 void print_tag_debug();
-bool is_on_log_callback_exist();
-void invoke_on_log_callbacks(LogLevel_t level, std::string msg);
 } // namespace internal
+
+/* -------------------------------------------------------------------------- */
+/*                                  Callback                                  */
+/* -------------------------------------------------------------------------- */
+extern Signal<LogLevel_t, std::string> on_log_signal;
 
 /* -------------------------------------------------------------------------- */
 /*                                   Logging                                  */
@@ -53,9 +55,7 @@ void info(fmt::format_string<Args...> fmt, Args&&... args)
     internal::print_tag_info();
     fmt::println(fmt, std::forward<Args>(args)...);
 
-    if (internal::is_on_log_callback_exist()) {
-        internal::invoke_on_log_callbacks(level_info, fmt::format(fmt, std::forward<Args>(args)...));
-    }
+    on_log_signal.emit(level_info, fmt::format(fmt, std::forward<Args>(args)...));
 }
 
 /**
@@ -71,9 +71,7 @@ void warn(fmt::format_string<Args...> fmt, Args&&... args)
     internal::print_tag_warn();
     fmt::println(fmt, std::forward<Args>(args)...);
 
-    if (internal::is_on_log_callback_exist()) {
-        internal::invoke_on_log_callbacks(level_warn, fmt::format(fmt, std::forward<Args>(args)...));
-    }
+    on_log_signal.emit(level_warn, fmt::format(fmt, std::forward<Args>(args)...));
 }
 
 /**
@@ -89,9 +87,7 @@ void error(fmt::format_string<Args...> fmt, Args&&... args)
     internal::print_tag_error();
     fmt::println(fmt, std::forward<Args>(args)...);
 
-    if (internal::is_on_log_callback_exist()) {
-        internal::invoke_on_log_callbacks(level_error, fmt::format(fmt, std::forward<Args>(args)...));
-    }
+    on_log_signal.emit(level_error, fmt::format(fmt, std::forward<Args>(args)...));
 }
 
 /**
@@ -107,9 +103,7 @@ void debug(fmt::format_string<Args...> fmt, Args&&... args)
     internal::print_tag_debug();
     fmt::println(fmt, std::forward<Args>(args)...);
 
-    if (internal::is_on_log_callback_exist()) {
-        internal::invoke_on_log_callbacks(level_debug, fmt::format(fmt, std::forward<Args>(args)...));
-    }
+    on_log_signal.emit(level_debug, fmt::format(fmt, std::forward<Args>(args)...));
 }
 
 /**
@@ -128,9 +122,7 @@ void tagInfo(const std::string& customTag, fmt::format_string<Args...> fmt, Args
     fmt::print("[{}] ", customTag);
     fmt::println(fmt, std::forward<Args>(args)...);
 
-    if (internal::is_on_log_callback_exist()) {
-        internal::invoke_on_log_callbacks(level_info, fmt::format(fmt, std::forward<Args>(args)...));
-    }
+    on_log_signal.emit(level_info, fmt::format(fmt, std::forward<Args>(args)...));
 }
 
 /**
@@ -149,9 +141,7 @@ void tagWarn(const std::string& customTag, fmt::format_string<Args...> fmt, Args
     fmt::print("[{}] ", customTag);
     fmt::println(fmt, std::forward<Args>(args)...);
 
-    if (internal::is_on_log_callback_exist()) {
-        internal::invoke_on_log_callbacks(level_warn, fmt::format(fmt, std::forward<Args>(args)...));
-    }
+    on_log_signal.emit(level_warn, fmt::format(fmt, std::forward<Args>(args)...));
 }
 
 /**
@@ -170,9 +160,7 @@ void tagError(const std::string& customTag, fmt::format_string<Args...> fmt, Arg
     fmt::print("[{}] ", customTag);
     fmt::println(fmt, std::forward<Args>(args)...);
 
-    if (internal::is_on_log_callback_exist()) {
-        internal::invoke_on_log_callbacks(level_error, fmt::format(fmt, std::forward<Args>(args)...));
-    }
+    on_log_signal.emit(level_error, fmt::format(fmt, std::forward<Args>(args)...));
 }
 
 /**
@@ -191,19 +179,8 @@ void tagDebug(const std::string& customTag, fmt::format_string<Args...> fmt, Arg
     fmt::print("[{}] ", customTag);
     fmt::println(fmt, std::forward<Args>(args)...);
 
-    if (internal::is_on_log_callback_exist()) {
-        internal::invoke_on_log_callbacks(level_debug, fmt::format(fmt, std::forward<Args>(args)...));
-    }
+    on_log_signal.emit(level_debug, fmt::format(fmt, std::forward<Args>(args)...));
 }
-
-/* -------------------------------------------------------------------------- */
-/*                                  Callbacks                                 */
-/* -------------------------------------------------------------------------- */
-typedef std::function<void(LogLevel_t, std::string)> onLogCallback_t;
-
-void add_on_log_callback(onLogCallback_t callback);
-
-void remove_on_log_callbacks();
 
 /* -------------------------------------------------------------------------- */
 /*                                  Settings                                  */

@@ -21,6 +21,8 @@
 
 static bool _enable_time_tag = true;
 
+mclog::Signal<mclog::LogLevel_t, std::string> mclog::on_log_signal;
+
 void mclog::set_time_tag_enable(bool enable)
 {
     _enable_time_tag = enable;
@@ -72,46 +74,4 @@ void mclog::internal::print_tag_debug()
     fmt::print("[");
     fmt::print(COLOR_DEBUG, "debug");
     fmt::print("] ");
-}
-
-/* -------------------------------------------------------------------------- */
-/*                                  Callbacks                                 */
-/* -------------------------------------------------------------------------- */
-static std::vector<mclog::onLogCallback_t>* _on_log_callback_list = nullptr;
-
-bool mclog::internal::is_on_log_callback_exist()
-{
-    return _on_log_callback_list != nullptr;
-}
-
-void mclog::internal::invoke_on_log_callbacks(LogLevel_t level, std::string msg)
-{
-    if (_on_log_callback_list == nullptr) {
-        return;
-    }
-
-    for (const auto& callback : *_on_log_callback_list) {
-        callback(level, msg);
-    }
-}
-
-void mclog::add_on_log_callback(onLogCallback_t callback)
-{
-    if (callback == nullptr) {
-        return;
-    }
-
-    if (_on_log_callback_list == nullptr) {
-        _on_log_callback_list = new std::vector<mclog::onLogCallback_t>;
-    }
-
-    _on_log_callback_list->push_back(callback);
-}
-
-void mclog::remove_on_log_callbacks()
-{
-    if (_on_log_callback_list == nullptr) {
-        return;
-    }
-    delete _on_log_callback_list;
 }
