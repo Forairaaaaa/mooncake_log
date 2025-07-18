@@ -39,7 +39,7 @@ void logging_level()
     fmt::println("logging level:");
 
     mclog::debug("you can't see me now");
-    mclog::set_level(mclog::LogLevel_t::level_debug);
+    mclog::set_level(mclog::level_debug);
     mclog::debug("dddddddddddddddeeeeeeeeeebuggggggggggggggggggiiiinnnnnnggg");
     // [2025-06-06 12.34.56.123] [debug] dddddddddddddddeeeeeeeeeebuggggggggggggggggggiiiinnnnnnggg
 
@@ -68,6 +68,7 @@ void time_tag_format()
 
     mclog::set_time_format(mclog::time_format_full);
     mclog::info("time format: full (default)");
+    // [2025-06-06 12.34.56.123] [info] time format: full (default)
 
     fmt::println("");
 }
@@ -76,11 +77,21 @@ void level_tag_format()
 {
     fmt::println("level tag format:");
 
-    mclog::get_settings().enable_level_tag = false;
-    mclog::info("????");
-    // ????
+    mclog::set_level_tag_format(mclog::level_format_none);
+    mclog::info("level tag format: none");
+    // [2025-06-06 12.34.56.123] [info] level tag format: none
 
-    mclog::get_settings().enable_level_tag = true;
+    mclog::set_level_tag_format(mclog::level_format_uppercase);
+    mclog::info("level tag format: uppercase");
+    // [2025-06-06 12.34.56.123] [INFO] level tag format: uppercase
+
+    mclog::set_level_tag_format(mclog::level_format_single_letter);
+    mclog::info("level tag format: single letter");
+    // [2025-06-06 12.34.56.123] [I] level tag format: single letter
+
+    mclog::set_level_tag_format(mclog::level_format_lowercase);
+    mclog::info("level tag format: lowercase (default)");
+    // [2025-06-06 12.34.56.123] [info] level tag format: lowercase (default)
 
     fmt::println("");
 }

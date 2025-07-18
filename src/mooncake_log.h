@@ -33,10 +33,17 @@ enum TimeFormat_t {
     time_format_unix_milliseconds,
 };
 
+enum LevelFormat_t {
+    level_format_none = 0,
+    level_format_lowercase,
+    level_format_uppercase,
+    level_format_single_letter,
+};
+
 struct Settings_t {
-    bool enable_level_tag = true;
     LogLevel_t log_level = level_error;
     TimeFormat_t time_format = time_format_full;
+    LevelFormat_t level_format = level_format_lowercase;
 };
 
 namespace internal {
@@ -52,13 +59,6 @@ bool should_i_go(const LogLevel_t& level);
 extern Signal<LogLevel_t, std::string> on_log;
 
 /**
- * @brief Get logging settings.
- *
- * @return Settings_t&
- */
-Settings_t& get_settings();
-
-/**
  * @brief Set logging level.
  *
  * @param level
@@ -71,6 +71,13 @@ void set_level(LogLevel_t level);
  * @param format
  */
 void set_time_format(TimeFormat_t format);
+
+/**
+ * @brief Set level tag format.
+ *
+ * @param format
+ */
+void set_level_tag_format(LevelFormat_t format);
 
 /**
  * @brief Log info

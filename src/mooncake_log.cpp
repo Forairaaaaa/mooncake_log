@@ -23,24 +23,24 @@ mclog::Signal<mclog::LogLevel_t, std::string> mclog::on_log;
 
 static mclog::Settings_t _settings;
 
-mclog::Settings_t& mclog::get_settings()
-{
-    return _settings;
-}
-
 void mclog::set_level(LogLevel_t level)
 {
-    get_settings().log_level = level;
+    _settings.log_level = level;
 }
 
 void mclog::set_time_format(TimeFormat_t format)
 {
-    get_settings().time_format = format;
+    _settings.time_format = format;
+}
+
+void mclog::set_level_tag_format(LevelFormat_t format)
+{
+    _settings.level_format = format;
 }
 
 bool mclog::internal::should_i_go(const LogLevel_t& level)
 {
-    return level > get_settings().log_level;
+    return level > _settings.log_level;
 }
 
 void mclog::internal::print_tag_time()
@@ -54,6 +54,9 @@ void mclog::internal::print_tag_time()
     auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()) % 1000;
 
     switch (_settings.time_format) {
+        case TimeFormat_t::time_format_none:
+            break;
+
         case TimeFormat_t::time_format_full:
             fmt::print("[{:04}-{:02}-{:02} {:02}:{:02}:{:02}.{:03}] ",
                        std::localtime(&now_c)->tm_year + 1900, // 年份
@@ -80,37 +83,82 @@ void mclog::internal::print_tag_time()
         case TimeFormat_t::time_format_unix_milliseconds:
             fmt::print("[{}] ", std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()).count());
             break;
-
-        default:
-            fmt::print("[wtf] ");
-            break;
     }
 }
 
 void mclog::internal::print_tag_level(const LogLevel_t& level)
 {
-    if (!_settings.enable_level_tag) {
+    if (_settings.level_format == LevelFormat_t::level_format_none) {
         return;
     }
 
     fmt::print("[");
 
     switch (level) {
-        case LogLevel_t::level_info:
-            fmt::print(COLOR_INFO, "info");
+        case LogLevel_t::level_info: {
+            switch (_settings.level_format) {
+                case LevelFormat_t::level_format_none:
+                    break;
+                case LevelFormat_t::level_format_lowercase:
+                    fmt::print(COLOR_INFO, "info");
+                    break;
+                case LevelFormat_t::level_format_uppercase:
+                    fmt::print(COLOR_INFO, "INFO");
+                    break;
+                case LevelFormat_t::level_format_single_letter:
+                    fmt::print(COLOR_INFO, "I");
+                    break;
+            }
             break;
-        case LogLevel_t::level_warn:
-            fmt::print(COLOR_WARN, "warn");
+        }
+        case LogLevel_t::level_warn: {
+            switch (_settings.level_format) {
+                case LevelFormat_t::level_format_none:
+                    break;
+                case LevelFormat_t::level_format_lowercase:
+                    fmt::print(COLOR_WARN, "warn");
+                    break;
+                case LevelFormat_t::level_format_uppercase:
+                    fmt::print(COLOR_WARN, "WARN");
+                    break;
+                case LevelFormat_t::level_format_single_letter:
+                    fmt::print(COLOR_WARN, "W");
+                    break;
+            }
             break;
-        case LogLevel_t::level_error:
-            fmt::print(COLOR_ERROR, "error");
+        }
+        case LogLevel_t::level_error: {
+            switch (_settings.level_format) {
+                case LevelFormat_t::level_format_none:
+                    break;
+                case LevelFormat_t::level_format_lowercase:
+                    fmt::print(COLOR_ERROR, "error");
+                    break;
+                case LevelFormat_t::level_format_uppercase:
+                    fmt::print(COLOR_ERROR, "ERROR");
+                    break;
+                case LevelFormat_t::level_format_single_letter:
+                    fmt::print(COLOR_ERROR, "E");
+                    break;
+            }
             break;
-        case LogLevel_t::level_debug:
-            fmt::print(COLOR_DEBUG, "debug");
+        }
+        case LogLevel_t::level_debug: {
+            switch (_settings.level_format) {
+                case LevelFormat_t::level_format_none:
+                    break;
+                case LevelFormat_t::level_format_lowercase:
+                    fmt::print(COLOR_DEBUG, "debug");
+                    break;
+                case LevelFormat_t::level_format_uppercase:
+                    fmt::print(COLOR_DEBUG, "DEBUG");
+                    break;
+                case LevelFormat_t::level_format_single_letter:
+                    fmt::print(COLOR_DEBUG, "D");
+                    break;
+            }
             break;
-        default:
-            fmt::print(COLOR_DEBUG, "wtf");
-            break;
+        }
     }
 
     fmt::print("] ");
