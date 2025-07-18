@@ -36,7 +36,7 @@ int main()
     // [我是沙比] [info]  6
 
     // 注册 OnLog 回调
-    mclog::on_log_signal.connect([](mclog::LogLevel_t level, std::string msg) {
+    mclog::on_log.connect([](mclog::LogLevel_t level, std::string msg) {
         fmt::println(">> level: {} msg: {}", static_cast<int>(level), msg);
     });
 

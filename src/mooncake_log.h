@@ -36,7 +36,7 @@ void print_tag_debug();
 /* -------------------------------------------------------------------------- */
 /*                                  Callback                                  */
 /* -------------------------------------------------------------------------- */
-extern Signal<LogLevel_t, std::string> on_log_signal;
+extern Signal<LogLevel_t, std::string> on_log;
 
 /* -------------------------------------------------------------------------- */
 /*                                   Logging                                  */
@@ -55,7 +55,7 @@ void info(fmt::format_string<Args...> fmt, Args&&... args)
     internal::print_tag_info();
     fmt::println(fmt, std::forward<Args>(args)...);
 
-    on_log_signal.emit(level_info, fmt::format(fmt, std::forward<Args>(args)...));
+    on_log.emit(level_info, fmt::format(fmt, std::forward<Args>(args)...));
 }
 
 /**
@@ -71,7 +71,7 @@ void warn(fmt::format_string<Args...> fmt, Args&&... args)
     internal::print_tag_warn();
     fmt::println(fmt, std::forward<Args>(args)...);
 
-    on_log_signal.emit(level_warn, fmt::format(fmt, std::forward<Args>(args)...));
+    on_log.emit(level_warn, fmt::format(fmt, std::forward<Args>(args)...));
 }
 
 /**
@@ -87,7 +87,7 @@ void error(fmt::format_string<Args...> fmt, Args&&... args)
     internal::print_tag_error();
     fmt::println(fmt, std::forward<Args>(args)...);
 
-    on_log_signal.emit(level_error, fmt::format(fmt, std::forward<Args>(args)...));
+    on_log.emit(level_error, fmt::format(fmt, std::forward<Args>(args)...));
 }
 
 /**
@@ -103,7 +103,7 @@ void debug(fmt::format_string<Args...> fmt, Args&&... args)
     internal::print_tag_debug();
     fmt::println(fmt, std::forward<Args>(args)...);
 
-    on_log_signal.emit(level_debug, fmt::format(fmt, std::forward<Args>(args)...));
+    on_log.emit(level_debug, fmt::format(fmt, std::forward<Args>(args)...));
 }
 
 /**
@@ -122,7 +122,7 @@ void tagInfo(const std::string& customTag, fmt::format_string<Args...> fmt, Args
     fmt::print("[{}] ", customTag);
     fmt::println(fmt, std::forward<Args>(args)...);
 
-    on_log_signal.emit(level_info, fmt::format(fmt, std::forward<Args>(args)...));
+    on_log.emit(level_info, fmt::format(fmt, std::forward<Args>(args)...));
 }
 
 /**
@@ -141,7 +141,7 @@ void tagWarn(const std::string& customTag, fmt::format_string<Args...> fmt, Args
     fmt::print("[{}] ", customTag);
     fmt::println(fmt, std::forward<Args>(args)...);
 
-    on_log_signal.emit(level_warn, fmt::format(fmt, std::forward<Args>(args)...));
+    on_log.emit(level_warn, fmt::format(fmt, std::forward<Args>(args)...));
 }
 
 /**
@@ -160,7 +160,7 @@ void tagError(const std::string& customTag, fmt::format_string<Args...> fmt, Arg
     fmt::print("[{}] ", customTag);
     fmt::println(fmt, std::forward<Args>(args)...);
 
-    on_log_signal.emit(level_error, fmt::format(fmt, std::forward<Args>(args)...));
+    on_log.emit(level_error, fmt::format(fmt, std::forward<Args>(args)...));
 }
 
 /**
@@ -179,7 +179,7 @@ void tagDebug(const std::string& customTag, fmt::format_string<Args...> fmt, Arg
     fmt::print("[{}] ", customTag);
     fmt::println(fmt, std::forward<Args>(args)...);
 
-    on_log_signal.emit(level_debug, fmt::format(fmt, std::forward<Args>(args)...));
+    on_log.emit(level_debug, fmt::format(fmt, std::forward<Args>(args)...));
 }
 
 /* -------------------------------------------------------------------------- */

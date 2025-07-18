@@ -21,7 +21,7 @@
 
 static bool _enable_time_tag = true;
 
-mclog::Signal<mclog::LogLevel_t, std::string> mclog::on_log_signal;
+mclog::Signal<mclog::LogLevel_t, std::string> mclog::on_log;
 
 void mclog::set_time_tag_enable(bool enable)
 {
