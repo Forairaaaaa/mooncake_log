@@ -12,8 +12,10 @@
 #include <mooncake_log.h>
 #include <vector>
 
-int main()
+void basic_logging()
 {
+    fmt::println("basic logging:");
+
     mclog::info("啊？？ {} ..??? 0x{:02X}", 114514, 66);
     mclog::info("{}", std::vector<int>{1, 23, 4, 5});
     // [2025-06-06 12.34.56.123] [info] 啊？？ 114514 ..??? 0x42
@@ -29,25 +31,50 @@ int main()
     // [2025-06-06 12.34.56.123] [error] 啊？？
     // [2025-06-06 12.34.56.123] [error] 6
 
+    fmt::println("");
+}
+
+void logging_level()
+{
+    fmt::println("logging level:");
+
     mclog::debug("you can't see me now");
     mclog::set_level(mclog::LogLevel_t::level_debug);
     mclog::debug("dddddddddddddddeeeeeeeeeebuggggggggggggggggggiiiinnnnnnggg");
     // [2025-06-06 12.34.56.123] [debug] dddddddddddddddeeeeeeeeeebuggggggggggggggggggiiiinnnnnnggg
 
-    mclog::set_time_format(mclog::time_format_time_only);
-    mclog::info("time format: time only");
-    // [12.34.56.123] [info] time format: time only
+    fmt::println("");
+}
 
-    mclog::set_time_format(mclog::time_format_ticks);
-    mclog::info("time format: ticks");
-    // [1752825074337] [info] time format: ticks
+void time_tag_format()
+{
+    fmt::println("time tag format:");
 
     mclog::set_time_format(mclog::time_format_none);
     mclog::info("time format: none");
     // [info] time format: none
 
+    mclog::set_time_format(mclog::time_format_time_only);
+    mclog::info("time format: time only");
+    // [12.34.56.123] [info] time format: time only
+
+    mclog::set_time_format(mclog::time_format_unix_seconds);
+    mclog::info("time format: unix seconds");
+    // [1752825074] [info] time format: unix seconds
+
+    mclog::set_time_format(mclog::time_format_unix_milliseconds);
+    mclog::info("time format: unix milliseconds");
+    // [1752825074337] [info] time format: unix milliseconds
+
     mclog::set_time_format(mclog::time_format_full);
     mclog::info("time format: full (default)");
+
+    fmt::println("");
+}
+
+void level_tag_format()
+{
+    fmt::println("level tag format:");
 
     mclog::get_settings().enable_level_tag = false;
     mclog::info("????");
@@ -55,7 +82,13 @@ int main()
 
     mclog::get_settings().enable_level_tag = true;
 
-    // 注册 OnLog 回调
+    fmt::println("");
+}
+
+void on_log_callback()
+{
+    fmt::println("on log callback:");
+
     mclog::on_log.connect([](mclog::LogLevel_t level, std::string msg) {
         fmt::println(">> level: {} msg: {}", static_cast<int>(level), msg);
     });
@@ -76,5 +109,15 @@ int main()
     // [debug] ?
     // >> level: 3 msg: ?
 
+    fmt::println("");
+}
+
+int main()
+{
+    basic_logging();
+    logging_level();
+    time_tag_format();
+    level_tag_format();
+    on_log_callback();
     return 0;
 }

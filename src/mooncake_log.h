@@ -26,10 +26,11 @@ enum LogLevel_t {
 };
 
 enum TimeFormat_t {
-    time_format_none,
+    time_format_none = 0,
     time_format_full,
     time_format_time_only,
-    time_format_ticks,
+    time_format_unix_seconds,
+    time_format_unix_milliseconds,
 };
 
 struct Settings_t {
