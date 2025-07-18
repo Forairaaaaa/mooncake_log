@@ -19,7 +19,7 @@
 #define COLOR_ERROR fg(fmt::terminal_color::red)
 #define COLOR_DEBUG fg(fmt::terminal_color::blue)
 
-mclog::Signal<mclog::LogLevel_t, std::string> mclog::on_log;
+mclog::Signal<mclog::LogLevel_t, const std::string&> mclog::on_log;
 
 static mclog::Settings_t _settings;
 

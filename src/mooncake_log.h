@@ -56,7 +56,7 @@ bool should_i_go(const LogLevel_t& level);
  * @brief On log signal.
  *
  */
-extern Signal<LogLevel_t, std::string> on_log;
+extern Signal<LogLevel_t, const std::string&> on_log;
 
 /**
  * @brief Set logging level.
@@ -94,9 +94,11 @@ void info(fmt::format_string<Args...> fmt, Args&&... args)
 
     internal::print_tag_time();
     internal::print_tag_level(level_info);
-    fmt::println(fmt, std::forward<Args>(args)...);
 
-    on_log.emit(level_info, fmt::format(fmt, std::forward<Args>(args)...));
+    auto formatted_msg = fmt::format(fmt, std::forward<Args>(args)...);
+    fmt::print("{}\n", formatted_msg);
+
+    on_log.emit(level_info, formatted_msg);
 }
 
 /**
@@ -114,9 +116,11 @@ void warn(fmt::format_string<Args...> fmt, Args&&... args)
 
     internal::print_tag_time();
     internal::print_tag_level(level_warn);
-    fmt::println(fmt, std::forward<Args>(args)...);
 
-    on_log.emit(level_warn, fmt::format(fmt, std::forward<Args>(args)...));
+    auto formatted_msg = fmt::format(fmt, std::forward<Args>(args)...);
+    fmt::print("{}\n", formatted_msg);
+
+    on_log.emit(level_warn, formatted_msg);
 }
 
 /**
@@ -134,9 +138,11 @@ void error(fmt::format_string<Args...> fmt, Args&&... args)
 
     internal::print_tag_time();
     internal::print_tag_level(level_error);
-    fmt::println(fmt, std::forward<Args>(args)...);
 
-    on_log.emit(level_error, fmt::format(fmt, std::forward<Args>(args)...));
+    auto formatted_msg = fmt::format(fmt, std::forward<Args>(args)...);
+    fmt::print("{}\n", formatted_msg);
+
+    on_log.emit(level_error, formatted_msg);
 }
 
 /**
@@ -154,9 +160,11 @@ void debug(fmt::format_string<Args...> fmt, Args&&... args)
 
     internal::print_tag_time();
     internal::print_tag_level(level_debug);
-    fmt::println(fmt, std::forward<Args>(args)...);
 
-    on_log.emit(level_debug, fmt::format(fmt, std::forward<Args>(args)...));
+    auto formatted_msg = fmt::format(fmt, std::forward<Args>(args)...);
+    fmt::print("{}\n", formatted_msg);
+
+    on_log.emit(level_debug, formatted_msg);
 }
 
 } // namespace mclog

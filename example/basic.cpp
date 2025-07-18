@@ -100,7 +100,7 @@ void on_log_callback()
 {
     fmt::println("on log callback:");
 
-    mclog::on_log.connect([](mclog::LogLevel_t level, std::string msg) {
+    mclog::on_log.connect([](mclog::LogLevel_t level, const std::string& msg) {
         fmt::println(">> level: {} msg: {}", static_cast<int>(level), msg);
     });
 
