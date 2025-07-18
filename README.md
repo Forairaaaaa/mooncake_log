@@ -29,6 +29,7 @@ mclog::error("{}", "6");
 ```cpp
 mclog::debug("you can't see me now");
 // > no shit
+
 mclog::set_level(mclog::level_debug);
 mclog::debug("dddddddddddddddeeeeeeeeeebuggggggggggggggggggiiiinnnnnnggg");
 // [2025-06-06 12.34.56.123] [debug] dddddddddddddddeeeeeeeeeebuggggggggggggggggggiiiinnnnnnggg
@@ -47,11 +48,11 @@ mclog::info("time format: time only");
 
 mclog::set_time_format(mclog::time_format_unix_seconds);
 mclog::info("time format: unix seconds");
-// [1752825074] [info] time format: unix seconds
+// [1749184496] [info] time format: unix seconds
 
 mclog::set_time_format(mclog::time_format_unix_milliseconds);
 mclog::info("time format: unix milliseconds");
-// [1752825074337] [info] time format: unix milliseconds
+// [1749184496123] [info] time format: unix milliseconds
 
 mclog::set_time_format(mclog::time_format_full);
 mclog::info("time format: full (default)");
