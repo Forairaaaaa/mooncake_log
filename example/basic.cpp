@@ -17,18 +17,21 @@ void basic_logging()
     fmt::println("basic logging:");
 
     mclog::info("?? {} ..??? 0x{:02X}", 114514, 66);
-    mclog::info("{}", std::vector<int>{1, 23, 4, 5});
     // [2025-06-06 12.34.56.123] [info] ?? 114514 ..??? 0x42
+
+    mclog::info("{}", std::vector<int>{1, 23, 4, 5});
     // [2025-06-06 12.34.56.123] [info] [1, 23, 4, 5]
 
     mclog::warn("???");
-    mclog::warn("{}", "6");
     // [2025-06-06 12.34.56.123] [warn] ???
+
+    mclog::warn("{}", "6");
     // [2025-06-06 12.34.56.123] [warn] 6
 
     mclog::error("???");
-    mclog::error("{}", "6");
     // [2025-06-06 12.34.56.123] [error] ???
+
+    mclog::error("{}", "6");
     // [2025-06-06 12.34.56.123] [error] 6
 
     fmt::println("");
