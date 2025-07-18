@@ -34,15 +34,25 @@ int main()
     mclog::debug("dddddddddddddddeeeeeeeeeebuggggggggggggggggggiiiinnnnnnggg");
     // [2025-06-06 12.34.56.123] [debug] dddddddddddddddeeeeeeeeeebuggggggggggggggggggiiiinnnnnnggg
 
-    mclog::get_settings().enable_time_tag = false;
-    mclog::info("????");
-    // [info] ????
+    mclog::set_time_format(mclog::time_format_time_only);
+    mclog::info("time format: time only");
+    // [12.34.56.123] [info] time format: time only
+
+    mclog::set_time_format(mclog::time_format_ticks);
+    mclog::info("time format: ticks");
+    // [1752825074337] [info] time format: ticks
+
+    mclog::set_time_format(mclog::time_format_none);
+    mclog::info("time format: none");
+    // [info] time format: none
+
+    mclog::set_time_format(mclog::time_format_full);
+    mclog::info("time format: full (default)");
 
     mclog::get_settings().enable_level_tag = false;
     mclog::info("????");
     // ????
 
-    mclog::get_settings().enable_time_tag = true;
     mclog::get_settings().enable_level_tag = true;
 
     // 注册 OnLog 回调

@@ -25,10 +25,17 @@ enum LogLevel_t {
     level_debug,
 };
 
+enum TimeFormat_t {
+    time_format_none,
+    time_format_full,
+    time_format_time_only,
+    time_format_ticks,
+};
+
 struct Settings_t {
-    bool enable_time_tag = true;
     bool enable_level_tag = true;
     LogLevel_t log_level = level_error;
+    TimeFormat_t time_format = time_format_full;
 };
 
 namespace internal {
@@ -56,6 +63,13 @@ Settings_t& get_settings();
  * @param level
  */
 void set_level(LogLevel_t level);
+
+/**
+ * @brief Set time format.
+ *
+ * @param format
+ */
+void set_time_format(TimeFormat_t format);
 
 /**
  * @brief Log info
