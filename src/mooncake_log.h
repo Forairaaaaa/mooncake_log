@@ -14,7 +14,7 @@
 #include "fmt/format.h"
 #include "fmt/ranges.h"
 #include "fmt/chrono.h"
-#include "signal.h"
+#include "_signal.h"
 
 namespace mclog {
 
