@@ -1,7 +1,7 @@
 {
     "name": "MooncakeLog",
-    "version": "1.0.0",
-    "description": "基于 fmt 的简单 logging 库",
+    "version": "1.2.4",
+    "description": "基于 fmt 的简单 logger",
     "keywords": "logging",
     "repository": {
         "type": "git",

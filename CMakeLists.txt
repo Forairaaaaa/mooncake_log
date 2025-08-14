@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.14)
 
 set(MOONCAKE_LOG_ROOT_DIR ${CMAKE_CURRENT_LIST_DIR})
 

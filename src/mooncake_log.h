@@ -15,6 +15,7 @@
 #include "fmt/ranges.h"
 #include "fmt/chrono.h"
 #include "mooncake_log_signal.h"
+#include <string_view>
 
 namespace mclog {
 
@@ -166,6 +167,98 @@ void debug(fmt::format_string<Args...> fmt, Args&&... args)
     internal::print_tag_level(level_debug);
 
     auto formatted_msg = fmt::format(fmt, std::forward<Args>(args)...);
+    fmt::print("{}\n", formatted_msg);
+
+    on_log.emit(level_debug, formatted_msg);
+}
+
+/**
+ * @brief Log info with extra tag
+ *
+ * @tparam Args
+ * @param tag  Extra tag to prepend
+ * @param args Message formatting arguments
+ */
+template <typename... Args>
+void tagInfo(std::string_view tag, fmt::format_string<Args...> fmt, Args&&... args)
+{
+    if (internal::should_i_go(level_info)) {
+        return;
+    }
+
+    internal::print_tag_time();
+    internal::print_tag_level(level_info);
+
+    auto formatted_msg = fmt::format("[{}] {}", tag, fmt::format(fmt, std::forward<Args>(args)...));
+    fmt::print("{}\n", formatted_msg);
+
+    on_log.emit(level_info, formatted_msg);
+}
+
+/**
+ * @brief Log warning with extra tag
+ *
+ * @tparam Args
+ * @param tag  Extra tag to prepend
+ * @param args Message formatting arguments
+ */
+template <typename... Args>
+void tagWarn(std::string_view tag, fmt::format_string<Args...> fmt, Args&&... args)
+{
+    if (internal::should_i_go(level_warn)) {
+        return;
+    }
+
+    internal::print_tag_time();
+    internal::print_tag_level(level_warn);
+
+    auto formatted_msg = fmt::format("[{}] {}", tag, fmt::format(fmt, std::forward<Args>(args)...));
+    fmt::print("{}\n", formatted_msg);
+
+    on_log.emit(level_warn, formatted_msg);
+}
+
+/**
+ * @brief Log error with extra tag
+ *
+ * @tparam Args
+ * @param tag  Extra tag to prepend
+ * @param args Message formatting arguments
+ */
+template <typename... Args>
+void tagError(std::string_view tag, fmt::format_string<Args...> fmt, Args&&... args)
+{
+    if (internal::should_i_go(level_error)) {
+        return;
+    }
+
+    internal::print_tag_time();
+    internal::print_tag_level(level_error);
+
+    auto formatted_msg = fmt::format("[{}] {}", tag, fmt::format(fmt, std::forward<Args>(args)...));
+    fmt::print("{}\n", formatted_msg);
+
+    on_log.emit(level_error, formatted_msg);
+}
+
+/**
+ * @brief Log debug with extra tag
+ *
+ * @tparam Args
+ * @param tag  Extra tag to prepend
+ * @param args Message formatting arguments
+ */
+template <typename... Args>
+void tagDebug(std::string_view tag, fmt::format_string<Args...> fmt, Args&&... args)
+{
+    if (internal::should_i_go(level_debug)) {
+        return;
+    }
+
+    internal::print_tag_time();
+    internal::print_tag_level(level_debug);
+
+    auto formatted_msg = fmt::format("[{}] {}", tag, fmt::format(fmt, std::forward<Args>(args)...));
     fmt::print("{}\n", formatted_msg);
 
     on_log.emit(level_debug, formatted_msg);
