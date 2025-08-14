@@ -1,9 +1,9 @@
 /**
- * @file signal.h
+ * @file mooncake_log_signal.h
  * @author Forairaaaaa
  * @brief
  * @version 0.1
- * @date 2025-03-21
+ * @date 2025-08-14
  *
  * @copyright Copyright (c) 2025
  *

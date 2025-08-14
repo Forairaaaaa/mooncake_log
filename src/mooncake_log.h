@@ -14,7 +14,7 @@
 #include "fmt/format.h"
 #include "fmt/ranges.h"
 #include "fmt/chrono.h"
-#include "_signal.h"
+#include "mooncake_log_signal.h"
 
 namespace mclog {
 
