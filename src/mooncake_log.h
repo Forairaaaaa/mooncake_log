@@ -20,10 +20,10 @@
 namespace mclog {
 
 enum LogLevel_t {
-    level_info = 0,
+    level_debug = 0,
+    level_info,
     level_warn,
     level_error,
-    level_debug,
 };
 
 enum TimeFormat_t {
@@ -42,7 +42,7 @@ enum LevelFormat_t {
 };
 
 struct Settings_t {
-    LogLevel_t log_level = level_error;
+    LogLevel_t log_level = level_info;
     TimeFormat_t time_format = time_format_full;
     LevelFormat_t level_format = level_format_lowercase;
 };
@@ -53,7 +53,7 @@ void print_tag_level(const LogLevel_t& level);
 LogLevel_t get_log_level();
 inline bool should_i_go(const LogLevel_t& level)
 {
-    return level > get_log_level();
+    return level < get_log_level();
 }
 } // namespace internal
 
