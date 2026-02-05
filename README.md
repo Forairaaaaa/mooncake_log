@@ -2,6 +2,8 @@
 
 只是 [fmt](https://github.com/fmtlib/fmt) 的简单封装
 
+引入后二进制文件通常会增加 300 多 KB 哦
+
 ### Basic logging
 
 ```cpp
