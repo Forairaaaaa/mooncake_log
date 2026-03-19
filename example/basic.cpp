@@ -70,6 +70,10 @@ void time_format()
     mclog::info("time format: unix milliseconds");
     // [1752825074337] [info] time format: unix milliseconds
 
+    mclog::set_time_format(mclog::time_format_iso_8601);
+    mclog::info("time format: iso 8601");
+    // [2025-06-06T12:34:56.123+0800] [info] time format: iso 8601
+
     mclog::set_time_format(mclog::time_format_full);
     mclog::info("time format: full (default)");
     // [2025-06-06 12.34.56.123] [info] time format: full (default)

@@ -87,6 +87,16 @@ void mclog::internal::print_tag_time()
         case TimeFormat_t::time_format_unix_milliseconds:
             fmt::print("[{}] ", std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()).count());
             break;
+
+        case TimeFormat_t::time_format_iso_8601: {
+            auto tm_result = std::localtime(&now_c);
+            char tz_buf[16] = {0};
+            std::strftime(tz_buf, sizeof(tz_buf), "%z", tm_result);
+            fmt::print("[{:04}-{:02}-{:02}T{:02}:{:02}:{:02}.{:03}{}] ", tm_result->tm_year + 1900,
+                       tm_result->tm_mon + 1, tm_result->tm_mday, tm_result->tm_hour, tm_result->tm_min,
+                       tm_result->tm_sec, milliseconds.count(), tz_buf);
+            break;
+        }
     }
 }
 

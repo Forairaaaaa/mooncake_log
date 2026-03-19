@@ -32,6 +32,7 @@ enum TimeFormat_t {
     time_format_time_only,
     time_format_unix_seconds,
     time_format_unix_milliseconds,
+    time_format_iso_8601,
 };
 
 enum LevelFormat_t {
