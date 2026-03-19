@@ -26,10 +26,18 @@ class Signal {
 public:
     using SlotType = std::function<void(Args...)>;
 
+    void emit(Args... args)
+    {
+        std::lock_guard<std::mutex> lock(_mutex);
+        for (auto& [id, slot] : _slots) {
+            slot(args...);
+        }
+    }
+
     size_t connect(const SlotType& slot)
     {
         std::lock_guard<std::mutex> lock(_mutex);
-        size_t id = ++_lastId;
+        size_t id = ++_last_id;
         _slots.push_back({id, slot});
         return id;
     }
@@ -41,17 +49,15 @@ public:
                      _slots.end());
     }
 
-    void emit(Args... args)
+    void clear()
     {
         std::lock_guard<std::mutex> lock(_mutex);
-        for (auto& [id, slot] : _slots) {
-            slot(args...);
-        }
+        _slots.clear();
     }
 
 private:
     std::vector<std::pair<size_t, SlotType>> _slots;
-    size_t _lastId = 0;
+    size_t _last_id = 0;
     std::mutex _mutex;
 };
 
